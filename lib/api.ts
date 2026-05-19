@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://foot-predict.onrender.com/api';
+const API_BASE_URL = 'https://foot-predict.onrender.com/api'; // FORCE DEPLOY v2
 
 export async function fetchFromAPI(endpoint: string) {
   try {
