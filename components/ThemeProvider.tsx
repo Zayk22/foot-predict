@@ -20,25 +20,15 @@ const ThemeContext = createContext<ThemeContextType>({
   toggleTheme: () => {},
 });
 
-export function ThemeProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light');
 
-  // Sync theme from localStorage on mount AND on every page navigation
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme') as Theme | null;
-
     if (storedTheme) {
       setTheme(storedTheme);
-      document.documentElement.classList.toggle(
-        'dark',
-        storedTheme === 'dark'
-      );
+      document.documentElement.classList.toggle('dark', storedTheme === 'dark');
     } else {
-      // Check system preference
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const defaultTheme = prefersDark ? 'dark' : 'light';
       setTheme(defaultTheme);
@@ -48,19 +38,13 @@ export function ThemeProvider({
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
-
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle(
-      'dark',
-      newTheme === 'dark'
-    );
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
 
   return (
-    <ThemeContext.Provider
-      value={{ theme, toggleTheme }}
-    >
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
