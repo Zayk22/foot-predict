@@ -24,12 +24,12 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-app.listen(PORT, () => {
-  console.log('⚽ API running on http://localhost:' + PORT);
-  console.log('📍 Health: http://localhost:' + PORT + '/api/health');
-  console.log('📍 Teams: http://localhost:' + PORT + '/api/teams');
-  console.log('📍 Matches: http://localhost:' + PORT + '/api/matches');
-  console.log('📍 Predictions: http://localhost:' + PORT + '/api/predictions');
-  console.log('📍 Standings: http://localhost:' + PORT + '/api/standings');
-  console.log('📍 Stats: http://localhost:' + PORT + '/api/stats');
+app.listen(PORT, '0.0.0.0', () => {
+  console.log('⚽ API running on http://0.0.0.0:' + PORT);
+  console.log('📍 Health: http://0.0.0.0:' + PORT + '/api/health');
+  console.log('📍 Teams: http://0.0.0.0:' + PORT + '/api/teams');
+  console.log('📍 Matches: http://0.0.0.0:' + PORT + '/api/matches');
+  console.log('📍 Predictions: http://0.0.0.0:' + PORT + '/api/predictions');
+  console.log('📍 Standings: http://0.0.0.0:' + PORT + '/api/standings');
+  console.log('📍 Stats: http://0.0.0.0:' + PORT + '/api/stats');
 });
