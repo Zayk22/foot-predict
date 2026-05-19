@@ -12,7 +12,11 @@ const app = express();
 const PORT = 5000;
 
 app.use(cors({
-  origin: ['https://foot-predict-me1d20dl5-zayk22s-projects.vercel.app', 'http://localhost:3000'],
+  origin: [
+    'https://foot-predict-p8oht0e8m-zayk22s-projects.vercel.app',
+    'https://foot-predict-me1d20dl5-zayk22s-projects.vercel.app',
+    'http://localhost:3000'
+  ],
   credentials: true,
 }));
 app.use(express.json());
