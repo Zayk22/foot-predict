@@ -2,18 +2,24 @@ const API_BASE_URL = 'https://foot-predict.onrender.com/api';
 
 export async function fetchFromAPI(endpoint: string) {
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 45000);
+
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      signal: controller.signal,
+      cache: 'no-store',
+    });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`);
     }
 
     const data = await response.json();
-
     return { data, error: null };
   } catch (error: any) {
-    console.error('API fetch error:', error);
-
+    console.error('FULL API ERROR:', error);
     return {
       data: null,
       error: error.message,

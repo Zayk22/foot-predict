@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../db');
 
-// GET /api/standings — Get teams with real stats
 router.get('/', async (req, res) => {
   try {
     const league = req.query.league || 'Premier League';
@@ -30,7 +29,11 @@ router.get('/', async (req, res) => {
         points: row.points,
         form: (row.form || 'WDWLW').split(''),
       }))
-      .sort((a, b) => b.points - a.points);
+      .sort((a, b) => b.points - a.points)
+      .map((row, index) => ({
+        ...row,
+        position: index + 1,
+      }));
 
     res.json({ success: true, league, count: standings.length, data: standings });
   } catch (err) {
