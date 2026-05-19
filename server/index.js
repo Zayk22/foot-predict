@@ -11,7 +11,10 @@ const statsRouter = require('./routes/stats');
 const app = express();
 const PORT = 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://foot-predict-me1d20dl5-zayk22s-projects.vercel.app', 'http://localhost:3000'],
+  credentials: true,
+}));
 app.use(express.json());
 
 app.use('/api/teams', teamsRouter);
