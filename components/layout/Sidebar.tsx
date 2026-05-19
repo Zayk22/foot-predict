@@ -84,10 +84,10 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
           <div className="my-3 border-t border-surface-200 dark:border-surface-800" />
 
           {authItems.map((item) =>
-            item.action ? (
+            'action' in item ? (
               <button
                 key={item.name}
-                onClick={() => { item.action(); onClose(); }}
+                onClick={() => { if ('action' in item) item.action(); onClose(); }}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl w-full text-left
                   text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-surface-200
                   transition-all duration-200 group"
