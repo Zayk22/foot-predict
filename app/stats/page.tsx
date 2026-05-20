@@ -1,6 +1,13 @@
-export const dynamic = 'force-dynamic';
 'use client';
+import { useAuth } from '@/components/AuthProvider';
 
+// Inside the component:
+const { user } = useAuth();
+
+// Change the greeting:
+<h1 className="text-3xl lg:text-4xl font-bold text-surface-900 dark:text-surface-100">
+  Good Evening, {user?.user_metadata?.full_name || 'Analyst'} 👋
+</h1>
 import { useState, useEffect, useRef } from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { getStandings, getTeams, getMatches, getLeagueStats } from '@/lib/api';
