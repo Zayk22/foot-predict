@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayout'), {
@@ -21,6 +22,12 @@ const stats = [
 
 export default function Home() {
   const { user } = useAuth();
+  const [isClient, setIsClient] = useState(false);
+
+  // Only render client-side content after mount to avoid hydration issues
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -29,9 +36,21 @@ export default function Home() {
     return 'Good Evening';
   };
 
+  // Static fallback that renders immediately
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-surface-50 dark:bg-surface-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-accent-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-surface-500">Loading FootPredict...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <DashboardLayout>
-      <div className="space-y-6 px-2 sm:px-0">
+      <div className="space-y-6 px-2 sm:px-0 overflow-hidden w-full max-w-[100vw]">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
