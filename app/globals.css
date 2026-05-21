@@ -2,10 +2,6 @@
 
 @variant dark (&:where(.dark, .dark *));
 
-/* ============================================
-   PREMIUM FOOTBALL DESIGN SYSTEM — Emerald
-   ============================================ */
-
 :root {
   --color-surface-50: #f5f7f5;
   --color-surface-100: #e8ede9;
@@ -33,6 +29,9 @@
   --color-success: #10b981;
   --color-danger: #ef4444;
   --color-warning: #f59e0b;
+
+  --bg-body: #f5f7f5;
+  --text-body: #141a16;
 }
 
 .dark {
@@ -62,6 +61,9 @@
   --color-success: #34d399;
   --color-danger: #f87171;
   --color-warning: #fbbf24;
+
+  --bg-body: #0a0f0c;
+  --text-body: #f5f7f5;
 }
 
 @theme inline {
@@ -105,14 +107,9 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--color-surface-50);
-    color: var(--color-surface-900);
+    background-color: var(--bg-body);
+    color: var(--text-body);
     transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .dark body {
-    background-color: var(--color-surface-950);
-    color: var(--color-surface-100);
   }
 }
 
