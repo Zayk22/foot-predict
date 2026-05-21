@@ -14,19 +14,21 @@ async function fetchFromFootballAPI(endpoint) {
   return response.json();
 }
 
-// Get Premier League standings (competition ID 2021)
+// Get Premier League standings
 async function getPLStandings() {
   const data = await fetchFromFootballAPI('/competitions/PL/standings');
   return data.standings[0]?.table || [];
 }
 
-// Get upcoming Premier League matches
-async function getPLMatches() {
-  const data = await fetchFromFootballAPI('/competitions/PL/matches?status=SCHEDULED');
+// Get matches for the next 7 days across ALL competitions
+async function getUpcomingMatches() {
+  const today = new Date().toISOString().split('T')[0];
+  const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const data = await fetchFromFootballAPI(`/matches?dateFrom=${today}&dateTo=${nextWeek}`);
   return data.matches || [];
 }
 
-// Get today's matches across competitions
+// Get today's matches
 async function getTodaysMatches() {
   const today = new Date().toISOString().split('T')[0];
   const data = await fetchFromFootballAPI(`/matches?dateFrom=${today}&dateTo=${today}`);
@@ -35,6 +37,6 @@ async function getTodaysMatches() {
 
 module.exports = {
   getPLStandings,
-  getPLMatches,
+  getUpcomingMatches,
   getTodaysMatches,
 };
