@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://foot-predict.onrender.com/api'; // FORCE DEPLOY v2
+const API_BASE_URL = 'https://foot-predict.onrender.com/api';
 
 export async function fetchFromAPI(endpoint: string) {
   try {
@@ -45,6 +45,10 @@ export async function getLiveMatches() {
 
 export async function getPredictions() {
   return fetchFromAPI('/predictions');
+}
+
+export async function getAIPredictions() {
+  return fetchFromAPI('/ai-predictions');
 }
 
 export async function getPredictionsForMatch(matchId: string | number) {
