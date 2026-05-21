@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayout'), {
   ssr: false,
 });
+import PickOfTheDay from '@/components/PickOfTheDay';
 import StatCard from '@/components/StatCard';
 import PredictionsTable from '@/components/PredictionsTable';
 import LeagueStandings from '@/components/LeagueStandings';
@@ -36,16 +37,18 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-3xl lg:text-4xl font-bold text-surface-900 dark:text-surface-100">
-            {getGreeting()}, {user?.user_metadata?.full_name || 'Analyst'} 
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-surface-900 dark:text-surface-100">
+            {getGreeting()}, {user?.user_metadata?.full_name || 'Analyst'}
           </h1>
           <p className="mt-2 text-surface-500 dark:text-surface-400">
             Here's your football prediction overview for today.
           </p>
         </motion.div>
 
+        <PickOfTheDay />
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-  {stats.map((stat, index) => (
+          {stats.map((stat, index) => (
             <StatCard
               key={stat.label}
               label={stat.label}
