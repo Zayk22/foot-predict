@@ -5,8 +5,11 @@ import AuthModal from '@/components/AuthModal';
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Football Prediction Dashboard",
-  description: "Premium AI-powered football predictions and live stats",
+  title: "FootPredict — Premium Football Analytics",
+  description: "AI-powered football predictions, live scores, league standings, and team comparisons",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
