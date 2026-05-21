@@ -28,7 +28,13 @@ export default function PredictionsTable() {
     async function loadPredictions() {
       const { data, error } = await getPredictions();
       if (!error && data?.data?.length) {
-        setPredictions(data.data);
+        const now = new Date();
+        const futureOnly = data.data.filter((p: any) =>
+          p.match?.match_date && new Date(p.match.match_date) > now
+        );
+        if (futureOnly.length > 0) {
+          setPredictions(futureOnly);
+        }
       }
     }
     loadPredictions();
@@ -53,9 +59,7 @@ export default function PredictionsTable() {
       </div>
 
       {error && (
-        <div className="text-center py-8 text-danger">
-          Failed to load predictions.
-        </div>
+        <div className="text-center py-8 text-danger">Failed to load predictions.</div>
       )}
 
       <table className="w-full text-left">

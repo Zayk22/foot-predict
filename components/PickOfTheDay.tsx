@@ -13,17 +13,21 @@ export default function PickOfTheDay() {
     async function load() {
       const { data } = await getPredictions();
       if (data?.data?.length) {
-        // Only show predictions from covered leagues
         const now = new Date();
-const covered = data.data.filter((p: any) =>
-  ['Premier League', 'La Liga', 'UEFA Champions League'].includes(p.match?.league) &&
-  new Date(p.match?.match_date) > now
-);
-        const pool = covered.length > 0 ? covered : data.data;
-        const best = pool.reduce((prev: any, curr: any) =>
-          (curr.confidence > prev.confidence ? curr : prev)
+        const covered = data.data.filter((p: any) =>
+          ['Premier League', 'La Liga', 'UEFA Champions League'].includes(p.match?.league) &&
+          p.match?.match_date && new Date(p.match.match_date) > now
         );
-        setPick(best);
+        if (covered.length > 0) {
+          const best = covered.reduce((prev: any, curr: any) =>
+            (curr.confidence > prev.confidence ? curr : prev)
+          );
+          setPick(best);
+        } else {
+          setPick(null);
+        }
+      } else {
+        setPick(null);
       }
       setLoading(false);
     }
