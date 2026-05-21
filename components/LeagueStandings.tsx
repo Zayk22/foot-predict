@@ -1,5 +1,5 @@
 'use client';
-
+import Skeleton from '@/components/Skeleton';
 import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -59,12 +59,17 @@ export default function LeagueStandings() {
         </h3>
       </div>
 
-      {loading && (
-        <div className="text-center py-8 text-surface-500 dark:text-surface-400">
-          <div className="animate-spin w-8 h-8 border-2 border-accent-500 border-t-transparent rounded-full mx-auto mb-3" />
-          Loading standings...
-        </div>
-      )}
+     {loading && (
+  <div className="space-y-2">
+    {[...Array(5)].map((_, i) => (
+      <div key={i} className="flex items-center gap-3 p-3">
+        <Skeleton className="w-7 h-7 rounded-full" />
+        <Skeleton className="h-4 flex-1" />
+        <Skeleton className="h-4 w-8" />
+      </div>
+    ))}
+  </div>
+)}
 
       {error && (
         <div className="text-center py-8 text-danger text-sm">

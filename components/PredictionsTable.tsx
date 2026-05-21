@@ -1,5 +1,5 @@
 'use client';
-
+import Skeleton from '@/components/Skeleton';
 import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -59,12 +59,18 @@ export default function PredictionsTable() {
         </h3>
       </div>
 
-      {loading && (
-        <div className="text-center py-8 text-surface-500 dark:text-surface-400">
-          <div className="animate-spin w-8 h-8 border-2 border-accent-500 border-t-transparent rounded-full mx-auto mb-3" />
-          Loading predictions...
-        </div>
-      )}
+     {loading && (
+  <div className="space-y-3">
+    {[...Array(5)].map((_, i) => (
+      <div key={i} className="flex items-center gap-4 py-3">
+        <Skeleton className="h-4 w-32 sm:w-48" />
+        <Skeleton className="h-4 w-16 hidden sm:block" />
+        <Skeleton className="h-6 w-20 rounded-full" />
+        <Skeleton className="h-2 w-12 sm:w-16" />
+      </div>
+    ))}
+  </div>
+)}
 
       {error && (
         <div className="text-center py-8 text-danger">
