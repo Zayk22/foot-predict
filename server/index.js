@@ -13,10 +13,12 @@ const PORT = 5000;
 
 app.use(cors({
   origin: [
-    'https://foot-predict-p8oht0e8m-zayk22s-projects.vercel.app',
+    'http://localhost:3000',
+    'https://foot-predict-4lp9.vercel.app',
+    'https://foot-predict-phi.vercel.app',
     'https://foot-predict-me1d20dl5-zayk22s-projects.vercel.app',
-    'http://localhost:3000'
   ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
 app.use(express.json());
