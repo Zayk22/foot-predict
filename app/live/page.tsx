@@ -84,23 +84,29 @@ export default function LiveScoresPage() {
         </motion.div>
 
         {loading && (
-          <div className="space-y-6">
-            {['Premier League', 'La Liga'].map((league) => (
-              <div key={league}>
-                <div className="h-5 w-32 bg-surface-200 dark:bg-surface-800 rounded mb-4" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {[...Array(2)].map((_, i) => (
-                    <div key={i} className="glass-strong rounded-2xl p-6 animate-pulse">
-                      <div className="flex justify-between mb-4"><div className="h-5 w-16 bg-surface-200 dark:bg-surface-800 rounded-full" /><div className="h-4 w-20 bg-surface-200 dark:bg-surface-800 rounded" /></div>
-                      <div className="flex items-center justify-between"><div className="h-5 w-20 bg-surface-200 dark:bg-surface-800 rounded" /><div className="h-8 w-16 bg-surface-200 dark:bg-surface-800 rounded" /><div className="h-5 w-20 bg-surface-200 dark:bg-surface-800 rounded" /></div>
-                    </div>
-                  ))}
-                </div>
+  <div className="space-y-6">
+    {['Premier League', 'La Liga', 'Bundesliga'].map((league) => (
+      <div key={league}>
+        <div className="h-5 w-32 bg-surface-200 dark:bg-surface-800 rounded mb-4" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="glass-strong rounded-2xl p-6 animate-pulse">
+              <div className="flex justify-between mb-4">
+                <div className="h-5 w-16 bg-surface-200 dark:bg-surface-800 rounded-full" />
+                <div className="h-4 w-20 bg-surface-200 dark:bg-surface-800 rounded" />
               </div>
-            ))}
-          </div>
-        )}
-
+              <div className="flex items-center justify-between">
+                <div className="h-5 w-20 bg-surface-200 dark:bg-surface-800 rounded" />
+                <div className="h-8 w-16 bg-surface-200 dark:bg-surface-800 rounded" />
+                <div className="h-5 w-20 bg-surface-200 dark:bg-surface-800 rounded" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+)}
         {error && (
           <div className="glass rounded-2xl p-10 text-center">
             <AlertTriangle size={48} className="mx-auto mb-4 text-warning" />
