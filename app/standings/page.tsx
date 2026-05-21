@@ -6,6 +6,7 @@ import { getStandings } from '@/lib/api';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Trophy, AlertTriangle, Inbox } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +19,6 @@ export default function StandingsPage() {
   const [selectedLeague, setSelectedLeague] = useState('Premier League');
   const tableRef = useRef<HTMLDivElement>(null);
 
-  // Fetch standings
   useEffect(() => {
     async function load() {
       setLoading(true);
@@ -33,109 +33,67 @@ export default function StandingsPage() {
     load();
   }, [selectedLeague]);
 
-  // GSAP animation
   useEffect(() => {
     if (loading || !tableRef.current) return;
-    gsap.fromTo(
-      tableRef.current,
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: tableRef.current,
-          start: 'top 90%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
+    gsap.fromTo(tableRef.current, { opacity: 0, y: 20 }, {
+      opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
+      scrollTrigger: { trigger: tableRef.current, start: 'top 90%', toggleActions: 'play none none none' },
+    });
   }, [loading]);
 
-  // Zone indicator
   const getZoneColor = (pos: number, total: number) => {
-    if (pos <= 4) return 'border-l-4 border-l-accent-500'; // Champions League
-    if (pos === 5) return 'border-l-4 border-l-warning'; // Europa League
-    if (pos >= total - 2) return 'border-l-4 border-l-danger'; // Relegation
+    if (pos <= 4) return 'border-l-4 border-l-accent-500';
+    if (pos === 5) return 'border-l-4 border-l-warning';
+    if (pos >= total - 2) return 'border-l-4 border-l-danger';
     return 'border-l-4 border-l-transparent';
   };
 
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className="text-3xl lg:text-4xl font-bold text-surface-900 dark:text-surface-100">
-            🏆 League Standings
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <h1 className="text-3xl lg:text-4xl font-bold text-surface-900 dark:text-surface-100 flex items-center gap-3">
+            <Trophy size={32} className="text-warning" />
+            League Standings
           </h1>
-          <p className="mt-2 text-surface-500 dark:text-surface-400">
-            Full league tables with team statistics.
-          </p>
+          <p className="mt-2 text-surface-500 dark:text-surface-400">Full league tables with team statistics.</p>
         </motion.div>
 
-        {/* League selector */}
         <div className="flex gap-3">
           {LEAGUES.map((league) => (
-            <button
-              key={league}
-              onClick={() => setSelectedLeague(league)}
-              className={`px-5 py-3 rounded-xl text-sm font-semibold transition-all
-                ${
-                  selectedLeague === league
-                    ? 'bg-accent-500 text-white shadow-lg shadow-accent-500/25'
-                    : 'bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400 hover:bg-surface-200 dark:hover:bg-surface-700'
-                }
-              `}
-            >
+            <button key={league} onClick={() => setSelectedLeague(league)} className={`px-5 py-3 rounded-xl text-sm font-semibold transition-all ${selectedLeague === league ? 'bg-accent-500 text-white shadow-lg shadow-accent-500/25' : 'bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400 hover:bg-surface-200 dark:hover:bg-surface-700'}`}>
               {league}
             </button>
           ))}
         </div>
 
-        {/* Legend */}
         <div className="flex flex-wrap gap-4 text-xs">
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-sm bg-accent-500" />
-            <span className="text-surface-500">Champions League</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-sm bg-warning" />
-            <span className="text-surface-500">Europa League</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-sm bg-danger" />
-            <span className="text-surface-500">Relegation</span>
-          </div>
+          <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-accent-500" /><span className="text-surface-500">Champions League</span></div>
+          <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-warning" /><span className="text-surface-500">Europa League</span></div>
+          <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-danger" /><span className="text-surface-500">Relegation</span></div>
         </div>
 
         {loading && (
-  <div className="glass-strong rounded-2xl p-6 animate-pulse">
-    <div className="h-5 w-32 bg-surface-200 dark:bg-surface-800 rounded mb-4" />
-    {[...Array(8)].map((_, i) => (
-      <div key={i} className="flex items-center gap-3 py-3 border-b border-surface-100 dark:border-surface-800/50">
-        <div className="w-7 h-7 bg-surface-200 dark:bg-surface-800 rounded-full" />
-        <div className="h-4 flex-1 bg-surface-200 dark:bg-surface-800 rounded" />
-        <div className="h-4 w-8 bg-surface-200 dark:bg-surface-800 rounded" />
-      </div>
-    ))}
-  </div>
-)}
+          <div className="glass-strong rounded-2xl p-6 animate-pulse">
+            <div className="h-5 w-32 bg-surface-200 dark:bg-surface-800 rounded mb-4" />
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="flex items-center gap-3 py-3 border-b border-surface-100 dark:border-surface-800/50">
+                <div className="w-7 h-7 bg-surface-200 dark:bg-surface-800 rounded-full" />
+                <div className="h-4 flex-1 bg-surface-200 dark:bg-surface-800 rounded" />
+                <div className="h-4 w-8 bg-surface-200 dark:bg-surface-800 rounded" />
+              </div>
+            ))}
+          </div>
+        )}
 
-        {/* Error */}
         {error && (
           <div className="glass rounded-2xl p-10 text-center">
-            <span className="text-4xl mb-4 block">⚠️</span>
+            <AlertTriangle size={48} className="mx-auto mb-4 text-warning" />
             <h3 className="text-lg font-semibold text-danger mb-2">Failed to load standings</h3>
             <p className="text-surface-500 text-sm">Make sure the API server is running on port 5000.</p>
           </div>
         )}
 
-        {/* Standings table */}
         {!loading && !error && standings.length > 0 && (
           <div ref={tableRef} className="glass-strong rounded-2xl overflow-hidden">
             <div className="overflow-x-auto">
@@ -156,76 +114,17 @@ export default function StandingsPage() {
                 </thead>
                 <tbody>
                   {standings.map((team, index) => (
-                    <motion.tr
-                      key={team.id}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                      className={`
-                        ${getZoneColor(index + 1, standings.length)}
-                        border-b border-surface-100 dark:border-surface-800/50
-                        hover:bg-surface-50 dark:hover:bg-surface-800/30 transition-colors
-                      `}
-                    >
-                      <td className="py-4 px-4">
-                        <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
-                          ${index === 0 ? 'bg-warning/20 text-warning' : ''}
-                          ${index < 4 ? 'bg-accent-500/10 text-accent-600 dark:text-accent-400' : ''}
-                          ${index >= standings.length - 2 ? 'bg-danger/10 text-danger' : ''}
-                          ${index >= 4 && index < standings.length - 2 ? 'text-surface-500' : ''}
-                        `}>
-                          {index + 1}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4">
-                        <div className="flex items-center gap-3">
-                          <span className="text-sm font-semibold text-surface-900 dark:text-surface-100">
-                            {team.name}
-                          </span>
-                          <span className="text-xs text-surface-400 hidden sm:inline">
-                            {team.short_name}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-4 px-4 text-center text-sm text-surface-600 dark:text-surface-400">
-                        {team.played}
-                      </td>
-                      <td className="py-4 px-4 text-center text-sm font-medium text-surface-700 dark:text-surface-300">
-                        {team.won}
-                      </td>
-                      <td className="py-4 px-4 text-center text-sm text-surface-600 dark:text-surface-400">
-                        {team.drawn}
-                      </td>
-                      <td className="py-4 px-4 text-center text-sm text-surface-600 dark:text-surface-400">
-                        {team.lost}
-                      </td>
-                      <td className="py-4 px-4 text-center text-sm text-surface-600 dark:text-surface-400 hidden sm:table-cell">
-                        {team.goals_for}
-                      </td>
-                      <td className="py-4 px-4 text-center text-sm text-surface-600 dark:text-surface-400 hidden sm:table-cell">
-                        {team.goals_against}
-                      </td>
-                      <td className="py-4 px-4 text-center">
-                        <span className="text-lg font-bold text-surface-900 dark:text-surface-100">
-                          {team.points}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4 hidden md:table-cell">
-                        <div className="flex gap-1 justify-center">
-                          {(team.form || []).map((result: string, i: number) => (
-                            <span
-                              key={i}
-                              className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold
-                                ${result === 'W' ? 'bg-success/20 text-success' : ''}
-                                ${result === 'D' ? 'bg-warning/20 text-warning' : ''}
-                                ${result === 'L' ? 'bg-danger/20 text-danger' : ''}
-                              `}
-                            >
-                              {result}
-                            </span>
-                          ))}
-                        </div>
-                      </td>
+                    <motion.tr key={team.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.05 }} className={`${getZoneColor(index + 1, standings.length)} border-b border-surface-100 dark:border-surface-800/50 hover:bg-surface-50 dark:hover:bg-surface-800/30 transition-colors`}>
+                      <td className="py-4 px-4"><span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${index === 0 ? 'bg-warning/20 text-warning' : ''} ${index < 4 ? 'bg-accent-500/10 text-accent-600 dark:text-accent-400' : ''} ${index >= standings.length - 2 ? 'bg-danger/10 text-danger' : ''} ${index >= 4 && index < standings.length - 2 ? 'text-surface-500' : ''}`}>{index + 1}</span></td>
+                      <td className="py-4 px-4"><div className="flex items-center gap-3"><span className="text-sm font-semibold text-surface-900 dark:text-surface-100">{team.name}</span><span className="text-xs text-surface-400 hidden sm:inline">{team.short_name}</span></div></td>
+                      <td className="py-4 px-4 text-center text-sm text-surface-600 dark:text-surface-400">{team.played}</td>
+                      <td className="py-4 px-4 text-center text-sm font-medium text-surface-700 dark:text-surface-300">{team.won}</td>
+                      <td className="py-4 px-4 text-center text-sm text-surface-600 dark:text-surface-400">{team.drawn}</td>
+                      <td className="py-4 px-4 text-center text-sm text-surface-600 dark:text-surface-400">{team.lost}</td>
+                      <td className="py-4 px-4 text-center text-sm text-surface-600 dark:text-surface-400 hidden sm:table-cell">{team.goals_for}</td>
+                      <td className="py-4 px-4 text-center text-sm text-surface-600 dark:text-surface-400 hidden sm:table-cell">{team.goals_against}</td>
+                      <td className="py-4 px-4 text-center"><span className="text-lg font-bold text-surface-900 dark:text-surface-100">{team.points}</span></td>
+                      <td className="py-4 px-4 hidden md:table-cell"><div className="flex gap-1 justify-center">{(team.form || []).map((result: string, i: number) => (<span key={i} className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${result === 'W' ? 'bg-success/20 text-success' : ''} ${result === 'D' ? 'bg-warning/20 text-warning' : ''} ${result === 'L' ? 'bg-danger/20 text-danger' : ''}`}>{result}</span>))}</div></td>
                     </motion.tr>
                   ))}
                 </tbody>
@@ -234,13 +133,10 @@ export default function StandingsPage() {
           </div>
         )}
 
-        {/* Empty state */}
         {!loading && !error && standings.length === 0 && (
           <div className="glass rounded-2xl p-10 text-center">
-            <span className="text-4xl mb-4 block">📭</span>
-            <h3 className="text-lg font-semibold text-surface-900 dark:text-surface-100 mb-2">
-              No standings available
-            </h3>
+            <Inbox size={48} className="mx-auto mb-4 text-surface-300" />
+            <h3 className="text-lg font-semibold text-surface-900 dark:text-surface-100 mb-2">No standings available</h3>
             <p className="text-surface-500 text-sm">Try selecting a different league.</p>
           </div>
         )}
