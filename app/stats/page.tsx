@@ -3,9 +3,9 @@
 export const dynamic = 'force-dynamic';
 
 import { useState, useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
 
-const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayout'), {
+const DashboardLayout = dynamicImport(() => import('@/components/layout/DashboardLayout'), {
   ssr: false,
 });
 import { getStandings, getTeams, getMatches, getLeagueStats } from '@/lib/api';
