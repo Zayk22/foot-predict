@@ -4,46 +4,48 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Flame, LogIn, UserPlus, X } from 'lucide-react';
+import { useAuth } from '@/components/AuthProvider';
 
 export default function AuthModal() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    // Show modal only if user hasn't dismissed it before
-    const dismissed = localStorage.getItem('auth_modal_dismissed');
-    if (!dismissed) {
-      // Small delay so it appears after page load
-      const timer = setTimeout(() => setIsOpen(true), 1500);
-      return () => clearTimeout(timer);
-    }
-  }, []);
+    // If user is logged in, never show modal
+    if (user) return;
+
+    // Always show modal for guests — no localStorage check
+    const timer = setTimeout(() => setIsOpen(true), 800);
+    return () => clearTimeout(timer);
+  }, [user]);
 
   const dismiss = () => {
     setIsOpen(false);
-    localStorage.setItem('auth_modal_dismissed', 'true');
+    // Store session-only flag so refresh still shows modal
+    sessionStorage.setItem('guest_mode', 'true');
   };
 
   const goTo = (path: string) => {
-    localStorage.setItem('auth_modal_dismissed', 'true');
+    sessionStorage.setItem('guest_mode', 'false');
     setIsOpen(false);
     router.push(path);
   };
+
+  // If user is logged in, don't render modal at all
+  if (user) return null;
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={dismiss}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
           />
 
-          {/* Modal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -52,15 +54,6 @@ export default function AuthModal() {
             className="fixed inset-0 z-[101] flex items-center justify-center p-4"
           >
             <div className="glass-strong rounded-3xl p-6 sm:p-8 w-full max-w-sm relative">
-              {/* Close button */}
-              <button
-                onClick={dismiss}
-                className="absolute top-4 right-4 p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors text-surface-400"
-              >
-                <X size={18} />
-              </button>
-
-              {/* Logo */}
               <div className="text-center mb-6">
                 <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-accent-500/10 mb-4">
                   <Flame size={28} className="text-accent-500" />
@@ -71,7 +64,6 @@ export default function AuthModal() {
                 </p>
               </div>
 
-              {/* Buttons */}
               <div className="space-y-3">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
