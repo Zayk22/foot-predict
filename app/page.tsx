@@ -1,6 +1,10 @@
 'use client';
 
-import DashboardLayout from '@/components/layout/DashboardLayout';
+import dynamic from 'next/dynamic';
+
+const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayout'), {
+  ssr: false,
+});
 import StatCard from '@/components/StatCard';
 import PredictionsTable from '@/components/PredictionsTable';
 import LeagueStandings from '@/components/LeagueStandings';

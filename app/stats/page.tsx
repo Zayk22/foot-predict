@@ -9,7 +9,11 @@ const { user } = useAuth();
   Good Evening, {user?.user_metadata?.full_name || 'Analyst'} 👋
 </h1>
 import { useState, useEffect, useRef } from 'react';
-import DashboardLayout from '@/components/layout/DashboardLayout';
+import dynamic from 'next/dynamic';
+
+const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayout'), {
+  ssr: false,
+});
 import { getStandings, getTeams, getMatches, getLeagueStats } from '@/lib/api';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
