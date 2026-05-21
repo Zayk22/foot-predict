@@ -1,13 +1,7 @@
 'use client';
-import { useAuth } from '@/components/AuthProvider';
 
-// Inside the component:
-const { user } = useAuth();
+export const dynamic = 'force-dynamic';
 
-// Change the greeting:
-<h1 className="text-3xl lg:text-4xl font-bold text-surface-900 dark:text-surface-100">
-  Good Evening, {user?.user_metadata?.full_name || 'Analyst'} 👋
-</h1>
 import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 
@@ -23,7 +17,9 @@ import {
   PieChart, Pie, Cell, Legend,
 } from 'recharts';
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const COLORS = ['#228be6', '#40c057', '#fab005', '#fa5252', '#7950f2', '#fd7e14', '#15aabf', '#e64980'];
 
@@ -41,11 +37,10 @@ export default function StatsPage() {
     async function load() {
       setLoading(true);
       try {
-        const [standingsRes, teamsRes, matchesRes, statsRes] = await Promise.all([
+        const [standingsRes, teamsRes, matchesRes] = await Promise.all([
           getStandings(selectedLeague),
           getTeams(),
           getMatches(),
-          getLeagueStats(selectedLeague),
         ]);
 
         if (standingsRes.data?.data) {
@@ -53,7 +48,6 @@ export default function StatsPage() {
         }
         if (teamsRes.data?.data) setTotalTeams(teamsRes.data.data.length);
         if (matchesRes.data?.data) setTotalMatches(matchesRes.data.data.length);
-        if (statsRes.data?.data) setLeagueStats(statsRes.data.data);
       } catch (err) {
         setError('Failed to load statistics');
       }
@@ -153,14 +147,7 @@ export default function StatsPage() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#e9ecef" />
                     <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#868e96' }} />
                     <YAxis tick={{ fontSize: 12, fill: '#868e96' }} />
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: '#fff',
-                        borderRadius: '12px',
-                        border: '1px solid #e9ecef',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                      }}
-                    />
+                    <Tooltip contentStyle={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e9ecef', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
                     <Bar dataKey="Points" fill="#339af0" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
@@ -175,16 +162,7 @@ export default function StatsPage() {
                 <h3 className="text-lg font-semibold text-surface-900 dark:text-surface-100 mb-4">📈 Results Distribution</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
-                    <Pie
-                      data={pieChartData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={100}
-                      paddingAngle={5}
-                      dataKey="value"
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    >
+                    <Pie data={pieChartData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={5} dataKey="value" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}>
                       {pieChartData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index]} />
                       ))}
