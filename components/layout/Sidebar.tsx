@@ -4,18 +4,20 @@ import { getIcon } from '@/lib/icons';
 import { Flame } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 
 const mainItems = [
-  { name: 'Home', href: '/', icon: 'home', active: true },
-  { name: 'Predictions', href: '/predictions', icon: 'predictions', active: false },
-  { name: 'Live Scores', href: '/live', icon: 'live', active: false },
-  { name: 'Standings', href: '/standings', icon: 'standings', active: false },
-  { name: 'Compare Teams', href: '/compare', icon: 'compare', active: false },
-  { name: 'Statistics', href: '/stats', icon: 'stats', active: false },
+  { name: 'Home', href: '/', icon: 'home' },
+  { name: 'Predictions', href: '/predictions', icon: 'predictions' },
+  { name: 'Live Scores', href: '/live', icon: 'live' },
+  { name: 'Standings', href: '/standings', icon: 'standings' },
+  { name: 'Compare Teams', href: '/compare', icon: 'compare' },
+  { name: 'Statistics', href: '/stats', icon: 'stats' },
 ];
 
 export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const pathname = usePathname();
   const { user, signOut } = useAuth();
 
   const authItems = user
@@ -63,29 +65,32 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
         </div>
 
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {mainItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={onClose}
-              className={`
-                flex items-center gap-3 px-4 py-3 rounded-xl
-                transition-all duration-200 group
-                ${item.active
-                  ? 'bg-accent-500/10 text-accent-600 dark:text-accent-400 font-medium'
-                  : 'text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-surface-200'
-                }
-              `}
-            >
-              <span className="group-hover:scale-110 transition-transform">
-                {getIcon(item.icon, 20)}
-              </span>
-              <span>{item.name}</span>
-              {item.active && (
-                <motion.div layoutId="activeNav" className="ml-auto w-1.5 h-1.5 rounded-full bg-accent-500" />
-              )}
-            </Link>
-          ))}
+          {mainItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={onClose}
+                className={`
+                  flex items-center gap-3 px-4 py-3 rounded-xl
+                  transition-all duration-200 group
+                  ${isActive
+                    ? 'bg-accent-500/10 text-accent-600 dark:text-accent-400 font-medium'
+                    : 'text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-surface-200'
+                  }
+                `}
+              >
+                <span className="group-hover:scale-110 transition-transform">
+                  {getIcon(item.icon, 20)}
+                </span>
+                <span>{item.name}</span>
+                {isActive && (
+                  <motion.div layoutId="activeNav" className="ml-auto w-1.5 h-1.5 rounded-full bg-accent-500" />
+                )}
+              </Link>
+            );
+          })}
 
           <div className="my-3 border-t border-surface-200 dark:border-surface-800" />
 
