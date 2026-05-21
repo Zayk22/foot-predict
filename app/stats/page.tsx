@@ -103,12 +103,29 @@ export default function StatsPage() {
           ))}
         </div>
 
-        {loading && (
-          <div className="flex flex-col items-center justify-center py-20">
-            <div className="animate-spin w-10 h-10 border-3 border-accent-500 border-t-transparent rounded-full mb-4" />
-            <p className="text-surface-500">Loading statistics...</p>
-          </div>
-        )}
+       {loading && (
+  <div className="space-y-8">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {[...Array(4)].map((_, i) => (
+        <div key={i} className="glass-strong rounded-2xl p-6 text-center animate-pulse">
+          <div className="w-12 h-12 bg-surface-200 dark:bg-surface-800 rounded-full mx-auto mb-3" />
+          <div className="h-8 w-16 bg-surface-200 dark:bg-surface-800 rounded mx-auto mb-1" />
+          <div className="h-4 w-20 bg-surface-200 dark:bg-surface-800 rounded mx-auto" />
+        </div>
+      ))}
+    </div>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="glass-strong rounded-2xl p-6 animate-pulse">
+        <div className="h-5 w-32 bg-surface-200 dark:bg-surface-800 rounded mb-4" />
+        <div className="h-64 bg-surface-200 dark:bg-surface-800 rounded" />
+      </div>
+      <div className="glass-strong rounded-2xl p-6 animate-pulse">
+        <div className="h-5 w-32 bg-surface-200 dark:bg-surface-800 rounded mb-4" />
+        <div className="h-64 bg-surface-200 dark:bg-surface-800 rounded" />
+      </div>
+    </div>
+  </div>
+)}
 
         {error && (
           <div className="glass rounded-2xl p-10 text-center">

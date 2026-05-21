@@ -113,13 +113,18 @@ export default function StandingsPage() {
           </div>
         </div>
 
-        {/* Loading */}
         {loading && (
-          <div className="flex flex-col items-center justify-center py-20">
-            <div className="animate-spin w-10 h-10 border-3 border-accent-500 border-t-transparent rounded-full mb-4" />
-            <p className="text-surface-500">Loading standings...</p>
-          </div>
-        )}
+  <div className="glass-strong rounded-2xl p-6 animate-pulse">
+    <div className="h-5 w-32 bg-surface-200 dark:bg-surface-800 rounded mb-4" />
+    {[...Array(8)].map((_, i) => (
+      <div key={i} className="flex items-center gap-3 py-3 border-b border-surface-100 dark:border-surface-800/50">
+        <div className="w-7 h-7 bg-surface-200 dark:bg-surface-800 rounded-full" />
+        <div className="h-4 flex-1 bg-surface-200 dark:bg-surface-800 rounded" />
+        <div className="h-4 w-8 bg-surface-200 dark:bg-surface-800 rounded" />
+      </div>
+    ))}
+  </div>
+)}
 
         {/* Error */}
         {error && (
