@@ -13,8 +13,12 @@ export default function PickOfTheDay() {
     async function load() {
       const { data } = await getPredictions();
       if (data?.data?.length) {
-        // Find highest confidence prediction
-        const best = data.data.reduce((prev: any, curr: any) =>
+        // Only show predictions from covered leagues
+        const covered = data.data.filter((p: any) =>
+          ['Premier League', 'La Liga', 'UEFA Champions League'].includes(p.match?.league)
+        );
+        const pool = covered.length > 0 ? covered : data.data;
+        const best = pool.reduce((prev: any, curr: any) =>
           (curr.confidence > prev.confidence ? curr : prev)
         );
         setPick(best);
@@ -38,11 +42,7 @@ export default function PickOfTheDay() {
 
   const matchDate = pick.match?.match_date
     ? new Date(pick.match.match_date).toLocaleDateString('en-GB', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'short',
-        hour: '2-digit',
-        minute: '2-digit',
+        weekday: 'long', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
       })
     : 'TBD';
 
@@ -53,11 +53,9 @@ export default function PickOfTheDay() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent-500 via-accent-600 to-accent-800 p-6 sm:p-8 text-white"
     >
-      {/* Background decoration */}
       <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
 
-      {/* Badge */}
       <div className="flex items-center gap-2 mb-4">
         <span className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-semibold">
           <Sparkles size={14} />
@@ -65,7 +63,6 @@ export default function PickOfTheDay() {
         </span>
       </div>
 
-      {/* Match */}
       <div className="mb-4">
         <p className="text-white/70 text-sm mb-1">{pick.match?.league || 'N/A'}</p>
         <h3 className="text-xl sm:text-2xl font-bold">
@@ -73,15 +70,11 @@ export default function PickOfTheDay() {
         </h3>
       </div>
 
-      {/* Details row */}
       <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-        {/* Prediction */}
         <div>
           <p className="text-white/60 text-xs mb-1">AI PREDICTION</p>
           <p className="text-lg font-bold">{pick.predicted_outcome}</p>
         </div>
-
-        {/* Confidence */}
         <div>
           <p className="text-white/60 text-xs mb-1">CONFIDENCE</p>
           <div className="flex items-center gap-2">
@@ -89,8 +82,6 @@ export default function PickOfTheDay() {
             <span className="text-lg font-bold">{pick.confidence}%</span>
           </div>
         </div>
-
-        {/* Time */}
         <div className="sm:ml-auto">
           <div className="flex items-center gap-1.5 text-white/70 text-sm">
             <Clock size={14} />
@@ -99,7 +90,6 @@ export default function PickOfTheDay() {
         </div>
       </div>
 
-      {/* CTA */}
       <motion.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
