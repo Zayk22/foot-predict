@@ -7,7 +7,6 @@
    ============================================ */
 
 :root {
-  /* Surface colors — warm graphite */
   --color-surface-50: #f5f7f5;
   --color-surface-100: #e8ede9;
   --color-surface-200: #d5ddd6;
@@ -20,7 +19,6 @@
   --color-surface-900: #141a16;
   --color-surface-950: #0a0f0c;
 
-  /* Accent — emerald green */
   --color-accent-50: #ecfdf5;
   --color-accent-100: #d1fae5;
   --color-accent-200: #a7f3d0;
@@ -32,7 +30,6 @@
   --color-accent-800: #065f46;
   --color-accent-900: #064e3b;
 
-  /* Semantic */
   --color-success: #10b981;
   --color-danger: #ef4444;
   --color-warning: #f59e0b;
@@ -103,10 +100,19 @@
   * {
     border-color: var(--color-surface-200);
   }
+
   body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-surface-50);
+    color: var(--color-surface-900);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dark body {
+    background-color: var(--color-surface-950);
+    color: var(--color-surface-100);
   }
 }
 
@@ -136,7 +142,6 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   }
 
-  /* Emerald glow for live indicators */
   .glow-emerald {
     box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), 0 0 40px rgba(16, 185, 129, 0.05);
   }
