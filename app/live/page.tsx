@@ -21,13 +21,17 @@ export default function LiveScoresPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [lastUpdated, setLastUpdated] = useState<string>('');
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function load() {
       const { data, error } = await getMatches();
       if (error) { setError(error); }
-      else if (data?.data) { setMatches(data.data); }
+      else if (data?.data) { 
+        setMatches(data.data); 
+        setLastUpdated(new Date().toLocaleTimeString());
+      }
       setLoading(false);
     }
     load();
@@ -85,7 +89,7 @@ export default function LiveScoresPage() {
           </div>
           <div className="hidden sm:flex items-center gap-2 text-sm text-surface-500">
             <span className="w-2 h-2 bg-success rounded-full animate-pulse" />
-            Auto-refreshing
+            {lastUpdated ? `Updated: ${lastUpdated}` : 'Just now'}
           </div>
         </motion.div>
 
