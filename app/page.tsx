@@ -12,10 +12,10 @@ import { useAuth } from '@/components/AuthProvider';
 import { motion } from 'framer-motion';
 
 const stats = [
-  { label: 'Predictions Today', value: '24', change: '+12%', icon: '🔮' },
-  { label: 'Accuracy Rate', value: '78%', change: '+5%', icon: '🎯' },
-  { label: 'Live Matches', value: '8', change: '3 active', icon: '📡' },
-  { label: 'League Coverage', value: '12', change: 'Top 5 EU', icon: '🏆' },
+  { label: 'Predictions Today', value: '24', change: '+12%', icon: 'flame' },
+  { label: 'Accuracy Rate', value: '78%', change: '+5%', icon: 'target' },
+  { label: 'Live Matches', value: '8', change: '3 active', icon: 'live' },
+  { label: 'League Coverage', value: '12', change: 'Top 5 EU', icon: 'shield' },
 ];
 
 export default function Home() {
@@ -37,7 +37,7 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           <h1 className="text-3xl lg:text-4xl font-bold text-surface-900 dark:text-surface-100">
-            {getGreeting()}, {user?.user_metadata?.full_name || 'Analyst'} 👋
+            {getGreeting()}, {user?.user_metadata?.full_name || 'Analyst'} 
           </h1>
           <p className="mt-2 text-surface-500 dark:text-surface-400">
             Here's your football prediction overview for today.

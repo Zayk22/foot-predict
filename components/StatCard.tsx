@@ -1,11 +1,13 @@
 'use client';
-
+import { getIcon } from '@/lib/icons';
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Register the ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface StatCardProps {
   label: string;
@@ -81,7 +83,9 @@ export default function StatCard({ label, value, change, icon, index }: StatCard
       className="glass-strong rounded-2xl p-6 cursor-pointer"
     >
       <div className="flex items-center justify-between mb-3">
-        <span className="text-2xl">{icon}</span>
+       <span className="text-accent-500">
+  {getIcon(icon, 24)}
+</span>
         <span className="text-xs font-medium text-success bg-success/10 px-2 py-1 rounded-full">
           {change}
         </span>

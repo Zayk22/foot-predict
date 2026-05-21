@@ -1,26 +1,28 @@
 'use client';
 
+import { getIcon } from '@/lib/icons';
+import { Flame } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { useAuth } from '@/components/AuthProvider';
 
 const mainItems = [
-  { name: 'Home', href: '/', icon: '⚽', active: true },
-  { name: 'Predictions', href: '/predictions', icon: '🔮', active: false },
-  { name: 'Live Scores', href: '/live', icon: '📡', active: false },
-  { name: 'Standings', href: '/standings', icon: '🏆', active: false },
-  { name: 'Compare Teams', href: '/compare', icon: '⚖️', active: false },
-  { name: 'Statistics', href: '/stats', icon: '📊', active: false },
+  { name: 'Home', href: '/', icon: 'home', active: true },
+  { name: 'Predictions', href: '/predictions', icon: 'predictions', active: false },
+  { name: 'Live Scores', href: '/live', icon: 'live', active: false },
+  { name: 'Standings', href: '/standings', icon: 'standings', active: false },
+  { name: 'Compare Teams', href: '/compare', icon: 'compare', active: false },
+  { name: 'Statistics', href: '/stats', icon: 'stats', active: false },
 ];
 
 export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { user, signOut } = useAuth();
 
   const authItems = user
-    ? [{ name: 'Logout', href: '#', icon: '🚪', action: signOut }]
+    ? [{ name: 'Logout', href: '#', icon: 'logout', action: signOut }]
     : [
-        { name: 'Login', href: '/login', icon: '🔑' },
-        { name: 'Sign Up', href: '/signup', icon: '✨' },
+        { name: 'Login', href: '/login', icon: 'login' },
+        { name: 'Sign Up', href: '/signup', icon: 'signup' },
       ];
 
   return (
@@ -50,7 +52,9 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
       >
         <div className="p-6 border-b border-surface-200 dark:border-surface-800">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">⚽</span>
+            <span className="text-accent-500">
+              <Flame size={28} />
+            </span>
             <div>
               <h1 className="text-lg font-bold text-surface-900 dark:text-surface-100 leading-tight">FootPredict</h1>
               <p className="text-xs text-surface-500 dark:text-surface-400">Premium Analytics</p>
@@ -73,7 +77,9 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
                 }
               `}
             >
-              <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+              <span className="group-hover:scale-110 transition-transform">
+                {getIcon(item.icon, 20)}
+              </span>
               <span>{item.name}</span>
               {item.active && (
                 <motion.div layoutId="activeNav" className="ml-auto w-1.5 h-1.5 rounded-full bg-accent-500" />
@@ -92,7 +98,9 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
                   text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-surface-200
                   transition-all duration-200 group"
               >
-                <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                <span className="group-hover:scale-110 transition-transform">
+                  {getIcon(item.icon, 20)}
+                </span>
                 <span>{item.name}</span>
               </button>
             ) : (
@@ -104,7 +112,9 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
                   text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-surface-200
                   transition-all duration-200 group"
               >
-                <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                <span className="group-hover:scale-110 transition-transform">
+                  {getIcon(item.icon, 20)}
+                </span>
                 <span>{item.name}</span>
               </Link>
             )

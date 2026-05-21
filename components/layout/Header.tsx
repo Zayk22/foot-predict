@@ -1,5 +1,5 @@
 'use client';
-
+import { Moon, Sun, Bell } from 'lucide-react';
 import { useTheme } from '@/components/ThemeProvider';
 import { useAuth } from '@/components/AuthProvider';
 import { motion } from 'framer-motion';
@@ -46,7 +46,7 @@ export default function Header({
             className="p-2 rounded-lg bg-surface-100 dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors"
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           >
-            {theme === 'light' ? '🌙' : '☀️'}
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </motion.button>
 
           <motion.button
@@ -54,7 +54,7 @@ export default function Header({
             whileTap={{ scale: 0.95 }}
             className="p-2 rounded-lg bg-surface-100 dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors relative"
           >
-            🔔
+            <Bell size={18} />
             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-danger rounded-full" />
           </motion.button>
 
