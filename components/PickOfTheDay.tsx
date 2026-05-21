@@ -14,9 +14,11 @@ export default function PickOfTheDay() {
       const { data } = await getPredictions();
       if (data?.data?.length) {
         // Only show predictions from covered leagues
-        const covered = data.data.filter((p: any) =>
-          ['Premier League', 'La Liga', 'UEFA Champions League'].includes(p.match?.league)
-        );
+        const now = new Date();
+const covered = data.data.filter((p: any) =>
+  ['Premier League', 'La Liga', 'UEFA Champions League'].includes(p.match?.league) &&
+  new Date(p.match?.match_date) > now
+);
         const pool = covered.length > 0 ? covered : data.data;
         const best = pool.reduce((prev: any, curr: any) =>
           (curr.confidence > prev.confidence ? curr : prev)
