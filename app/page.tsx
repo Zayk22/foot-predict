@@ -7,6 +7,7 @@ const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayou
   ssr: false,
 });
 import PickOfTheDay from '@/components/PickOfTheDay';
+import LeagueBadge from '@/components/LeagueBadge';
 import StatCard from '@/components/StatCard';
 import PredictionsTable from '@/components/PredictionsTable';
 import LeagueStandings from '@/components/LeagueStandings';
@@ -24,7 +25,6 @@ export default function Home() {
   const { user } = useAuth();
   const [isClient, setIsClient] = useState(false);
 
-  // Only render client-side content after mount to avoid hydration issues
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -36,7 +36,6 @@ export default function Home() {
     return 'Good Evening';
   };
 
-  // Static fallback that renders immediately
   if (!isClient) {
     return (
       <div className="min-h-screen bg-surface-50 dark:bg-surface-950 flex items-center justify-center">
@@ -50,7 +49,7 @@ export default function Home() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6 px-2 sm:px-0 overflow-hidden w-full max-w-[100vw]">
+      <div className="space-y-6 px-2 sm:px-0">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,6 +64,7 @@ export default function Home() {
         </motion.div>
 
         <PickOfTheDay />
+        <LeagueBadge />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {stats.map((stat, index) => (
