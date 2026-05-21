@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-full flex flex-col bg-surface-50 dark:bg-surface-950 text-surface-900 dark:text-surface-100 antialiased">
+      <body className="bg-surface-50 dark:bg-surface-950 text-surface-900 dark:text-surface-100 antialiased">
         <ThemeProvider>
           <AuthProvider>
             <AuthModal />
