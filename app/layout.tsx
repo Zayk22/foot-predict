@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased transition-colors duration-300">
+      <body className="bg-white dark:bg-black text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300">
         <ThemeProvider>
           <AuthProvider>
             <AuthModal />

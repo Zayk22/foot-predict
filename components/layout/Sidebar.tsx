@@ -44,7 +44,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
       <aside
         className={`
           fixed top-0 left-0 z-50 h-full w-64
-          bg-surface-50 dark:bg-surface-950
+          bg-white dark:bg-gray-950
           border-r border-surface-200 dark:border-surface-800
           flex flex-col
           transition-transform duration-300 ease-in-out
