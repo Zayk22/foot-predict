@@ -2,19 +2,7 @@
 
 @variant dark (&:where(.dark, .dark *));
 
-:root {
-  --color-surface-50: #f5f7f5;
-  --color-surface-100: #e8ede9;
-  --color-surface-200: #d5ddd6;
-  --color-surface-300: #bcc7be;
-  --color-surface-400: #8fa394;
-  --color-surface-500: #6b8070;
-  --color-surface-600: #4d6052;
-  --color-surface-700: #364038;
-  --color-surface-800: #1f2722;
-  --color-surface-900: #141a16;
-  --color-surface-950: #0a0f0c;
-
+@theme inline {
   --color-accent-50: #ecfdf5;
   --color-accent-100: #d1fae5;
   --color-accent-200: #a7f3d0;
@@ -30,86 +18,15 @@
   --color-danger: #ef4444;
   --color-warning: #f59e0b;
 
-  --bg-body: #f5f7f5;
-  --text-body: #141a16;
-}
-
-.dark {
-  --color-surface-50: #0a0f0c;
-  --color-surface-100: #141a16;
-  --color-surface-200: #1f2722;
-  --color-surface-300: #364038;
-  --color-surface-400: #6b8070;
-  --color-surface-500: #8fa394;
-  --color-surface-600: #bcc7be;
-  --color-surface-700: #d5ddd6;
-  --color-surface-800: #e8ede9;
-  --color-surface-900: #f5f7f5;
-  --color-surface-950: #fafbfa;
-
-  --color-accent-50: #064e3b;
-  --color-accent-100: #065f46;
-  --color-accent-200: #047857;
-  --color-accent-300: #059669;
-  --color-accent-400: #10b981;
-  --color-accent-500: #34d399;
-  --color-accent-600: #6ee7b7;
-  --color-accent-700: #a7f3d0;
-  --color-accent-800: #d1fae5;
-  --color-accent-900: #ecfdf5;
-
-  --color-success: #34d399;
-  --color-danger: #f87171;
-  --color-warning: #fbbf24;
-
-  --bg-body: #0a0f0c;
-  --text-body: #f5f7f5;
-}
-
-@theme inline {
-  --color-surface-50: var(--color-surface-50);
-  --color-surface-100: var(--color-surface-100);
-  --color-surface-200: var(--color-surface-200);
-  --color-surface-300: var(--color-surface-300);
-  --color-surface-400: var(--color-surface-400);
-  --color-surface-500: var(--color-surface-500);
-  --color-surface-600: var(--color-surface-600);
-  --color-surface-700: var(--color-surface-700);
-  --color-surface-800: var(--color-surface-800);
-  --color-surface-900: var(--color-surface-900);
-  --color-surface-950: var(--color-surface-950);
-
-  --color-accent-50: var(--color-accent-50);
-  --color-accent-100: var(--color-accent-100);
-  --color-accent-200: var(--color-accent-200);
-  --color-accent-300: var(--color-accent-300);
-  --color-accent-400: var(--color-accent-400);
-  --color-accent-500: var(--color-accent-500);
-  --color-accent-600: var(--color-accent-600);
-  --color-accent-700: var(--color-accent-700);
-  --color-accent-800: var(--color-accent-800);
-  --color-accent-900: var(--color-accent-900);
-
-  --color-success: var(--color-success);
-  --color-danger: var(--color-danger);
-  --color-warning: var(--color-warning);
-
   --font-sans: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
 }
 
 @layer base {
-  * {
-    border-color: var(--color-surface-200);
-  }
-
   body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--bg-body);
-    color: var(--text-body);
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -129,20 +46,13 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   }
   .dark .glass {
-    background: rgba(10, 15, 12, 0.7);
+    background: rgba(0, 0, 0, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.04);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
   }
   .dark .glass-strong {
-    background: rgba(10, 15, 12, 0.85);
+    background: rgba(0, 0, 0, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.06);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  }
-
-  .glow-emerald {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), 0 0 40px rgba(16, 185, 129, 0.05);
-  }
-  .dark .glow-emerald {
-    box-shadow: 0 0 20px rgba(52, 211, 153, 0.2), 0 0 40px rgba(52, 211, 153, 0.08);
   }
 }

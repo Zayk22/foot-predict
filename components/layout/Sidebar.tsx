@@ -45,21 +45,21 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
         className={`
           fixed top-0 left-0 z-50 h-full w-64
           bg-white dark:bg-gray-950
-          border-r border-surface-200 dark:border-surface-800
+          border-r border-gray-200 dark:border-gray-800
           flex flex-col
           transition-transform duration-300 ease-in-out
           lg:relative lg:translate-x-0
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
-        <div className="p-6 border-b border-surface-200 dark:border-surface-800">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-800">
           <div className="flex items-center gap-3">
             <span className="text-accent-500">
               <Flame size={28} />
             </span>
             <div>
-              <h1 className="text-lg font-bold text-surface-900 dark:text-surface-100 leading-tight">FootPredict</h1>
-              <p className="text-xs text-surface-500 dark:text-surface-400">Premium Analytics</p>
+              <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100 leading-tight">FootPredict</h1>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Premium Analytics</p>
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
                   transition-all duration-200 group
                   ${isActive
                     ? 'bg-accent-500/10 text-accent-600 dark:text-accent-400 font-medium'
-                    : 'text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-surface-200'
+                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'
                   }
                 `}
               >
@@ -92,7 +92,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
             );
           })}
 
-          <div className="my-3 border-t border-surface-200 dark:border-surface-800" />
+          <div className="my-3 border-t border-gray-200 dark:border-gray-800" />
 
           {authItems.map((item) =>
             'action' in item ? (
@@ -100,7 +100,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
                 key={item.name}
                 onClick={() => { if ('action' in item) item.action(); onClose(); }}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl w-full text-left
-                  text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-surface-200
+                  text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200
                   transition-all duration-200 group"
               >
                 <span className="group-hover:scale-110 transition-transform">
@@ -114,7 +114,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
                 href={item.href}
                 onClick={onClose}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl
-                  text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-surface-200
+                  text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200
                   transition-all duration-200 group"
               >
                 <span className="group-hover:scale-110 transition-transform">
@@ -127,26 +127,26 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
         </nav>
 
         {user && (
-          <div className="p-4 border-t border-surface-200 dark:border-surface-800">
+          <div className="p-4 border-t border-gray-200 dark:border-gray-800">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-full bg-accent-500 flex items-center justify-center text-white font-medium text-sm">
                 {user.user_metadata?.full_name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase() || 'U'}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-surface-900 dark:text-surface-100 truncate">
+                <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                   {user.user_metadata?.full_name || user.email}
                 </p>
-                <p className="text-xs text-surface-500">Signed in</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Signed in</p>
               </div>
             </div>
           </div>
         )}
 
         {!user && (
-          <div className="p-4 border-t border-surface-200 dark:border-surface-800">
+          <div className="p-4 border-t border-gray-200 dark:border-gray-800">
             <div className="glass rounded-xl p-4 text-center">
-              <p className="text-xs text-surface-500 dark:text-surface-400 mb-2">PRO PLAN</p>
-              <p className="text-lg font-bold text-surface-900 dark:text-surface-100">Upgrade Now</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">PRO PLAN</p>
+              <p className="text-lg font-bold text-gray-900 dark:text-gray-100">Upgrade Now</p>
               <button className="mt-2 w-full py-2 bg-accent-500 hover:bg-accent-600 text-white text-sm rounded-lg transition-colors">
                 Get Premium
               </button>
